@@ -77,6 +77,7 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 ## Aliases #########################################################
 
+alias e="emacsclient -n "
 alias la="ls -a "
 alias ll="ls -l "
 

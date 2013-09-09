@@ -16,8 +16,6 @@ zstyle ':vcs_info:*' unstagedstr "%F{red}-%f"
 function _vcs_info_precmd () {LANG=en_US.UTF-8 vcs_info}
 add-zsh-hook precmd _vcs_info_precmd
 
-RPROMPT='${vcs_info_msg_0_}[%!]'
-
 function zsh_prompt_jobs(){
     local running=0
     local suspended=0
@@ -48,5 +46,13 @@ function zsh_prompt_remotehost(){
 zsh_prompt_directory="%F{yellow}%~%f"
 zsh_prompt_doller="%(#.%F{red}#%f.%%)"
 
-PROMPT="[${zsh_prompt_exitcode}\$(zsh_prompt_jobs)]\
-${zsh_prompt_username}\$(zsh_prompt_remotehost):${zsh_prompt_directory} ${zsh_prompt_doller} "
+case $TERM in
+    dumb | emacs )
+        RPROMPT=""
+        PROMPT="%m:%~> "
+        unsetopt zle ;;
+    *)
+        RPROMPT='${vcs_info_msg_0_}[%!]'
+        PROMPT="[${zsh_prompt_exitcode}\$(zsh_prompt_jobs)]\
+${zsh_prompt_username}\$(zsh_prompt_remotehost):${zsh_prompt_directory} ${zsh_prompt_doller} ";;
+esac
