@@ -9,6 +9,8 @@ function setenv() { export $1="$2" }
 case $OSTYPE in
     darwin*)
         [ -f ~/.launchd.conf ] && source ~/.launchd.conf;;
+    linux-gnu)
+        alias ls='ls --color ';;
 esac
 
 ## PROMPT ##################################################
@@ -73,5 +75,8 @@ export LSCOLORS=`lsColorsBSD $LSCOLORSCONF`
 export LS_COLORS=`lsColorsGNU $LSCOLORSCONF`
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
+## Aliases #########################################################
 
+alias la="ls -a "
+alias ll="ls -l "
 
