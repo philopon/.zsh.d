@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 autoload -Uz colors; colors
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
@@ -44,7 +46,7 @@ function zsh_prompt_remotehost(){
 }
 
 zsh_prompt_directory="%F{yellow}%~%f"
-zsh_prompt_doller="%(#.%F{red}#%f.%%)"
+zsh_prompt_mark="%(#.%F{red}#%f.%%)"
 
 case $TERM in
     dumb | emacs )
@@ -53,6 +55,9 @@ case $TERM in
         unsetopt zle ;;
     *)
         RPROMPT='${vcs_info_msg_0_}[%!]'
-        PROMPT="[${zsh_prompt_exitcode}\$(zsh_prompt_jobs)]\
-${zsh_prompt_username}\$(zsh_prompt_remotehost):${zsh_prompt_directory} ${zsh_prompt_doller} ";;
+#        PROMPT="[${zsh_prompt_exitcode}\$(zsh_prompt_jobs)]\
+#${zsh_prompt_username}\$(zsh_prompt_remotehost):${zsh_prompt_directory} ${zsh_prompt_doller} ";;
+        PROMPT="[${zsh_prompt_exitcode}\$(zsh_prompt_jobs)]${zsh_prompt_username}\$(zsh_prompt_remotehost):${zsh_prompt_directory}
+${zsh_prompt_mark} ";;
+
 esac

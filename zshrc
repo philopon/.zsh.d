@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 autoload -Uz zmv
 alias zmv='noglob zmv -W '
 
@@ -12,6 +14,8 @@ case $OSTYPE in
     linux-gnu)
         alias ls='ls --color ';;
 esac
+
+fpath=(~/.zsh.d/zsh-completions/src $fpath)
 
 ## PROMPT ##################################################
 
@@ -75,9 +79,23 @@ export LSCOLORS=`lsColorsBSD $LSCOLORSCONF`
 export LS_COLORS=`lsColorsGNU $LSCOLORSCONF`
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
+source ~/.zsh.d/zaw/zaw.zsh
+
 ## Aliases #########################################################
 
-alias e="emacsclient -n "
+function e () {
+    if ! `emacsclient -n $@ 2> /dev/null`; then
+        case $OSTYPE in
+            darwin*)
+                open -a Emacs
+                while ! `emacsclient -e 'nil' &> /dev/null`; do
+                    sleep 1
+                done
+                emacsclient -n $@
+        esac
+    fi
+}
+
 alias la="ls -a "
 alias ll="ls -l "
 
