@@ -81,3 +81,4 @@ alias e="emacsclient -n "
 alias la="ls -a "
 alias ll="ls -l "
 
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
