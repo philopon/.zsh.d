@@ -45,6 +45,14 @@ function zsh_prompt_remotehost(){
     fi
 }
 
+function zsh_prompt_cabal_sandbox() {
+  local glob
+  if [ -d ./.cabal-sandbox/ ]; then
+    glob=(./.cabal-sandbox/*/*.conf)
+    echo "%B%F{green}${#glob}%k%b "
+  fi
+}
+
 zsh_prompt_directory="%F{yellow}%~%f"
 zsh_prompt_mark="%(#.%F{red}#%f.%%)"
 
@@ -55,9 +63,7 @@ case $TERM in
         unsetopt zle ;;
     *)
         RPROMPT='${vcs_info_msg_0_}[%!]'
-#        PROMPT="[${zsh_prompt_exitcode}\$(zsh_prompt_jobs)]\
-#${zsh_prompt_username}\$(zsh_prompt_remotehost):${zsh_prompt_directory} ${zsh_prompt_doller} ";;
         PROMPT="[${zsh_prompt_exitcode}\$(zsh_prompt_jobs)]${zsh_prompt_username}\$(zsh_prompt_remotehost):${zsh_prompt_directory}
-${zsh_prompt_mark} ";;
+\$(zsh_prompt_cabal_sandbox)${zsh_prompt_mark} ";;
 
 esac
