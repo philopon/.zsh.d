@@ -18,7 +18,7 @@ esac
 for file in ~/.paths; do
   if [ -f $file ]; then
     while read line; do
-      path=($line $path)
+      path=(`eval echo $line` $path)
     done < $file
   fi
 done
@@ -26,9 +26,9 @@ done
 for file in ~/.library_paths; do
   if [ -f $file ]; then
     while read line; do
-      library_path=($line $library_path)
-      ld_library_path=($line $ld_library_path)
-      dyld_library_path=($line $dyld_library_path)
+      library_path=(`eval echo $line` $library_path)
+      ld_library_path=(`eval echo $line` $ld_library_path)
+      dyld_library_path=(`eval echo $line` $dyld_library_path)
     done < $file
   fi
 done
@@ -36,8 +36,8 @@ done
 for file in ~/.include_paths; do
   if [ -f $file ]; then
     while read line; do
-      c_include_path=($line $c_include_path)
-      cplus_include_path=($line $cplus_include_path)
+      c_include_path=(`eval echo $line` $c_include_path)
+      cplus_include_path=(`eval echo $line` $cplus_include_path)
     done < $file
   fi
 done
@@ -45,7 +45,7 @@ done
 for file in ~/.python_paths; do
   if [ -f $file ]; then
     while read line; do
-      pythonpath=($line $pythonpath)
+      pythonpath=(`eval echo $line` $pythonpath)
     done < $file
   fi
 done
@@ -53,7 +53,7 @@ done
 for file in ~/.pkg-config_paths; do
   if [ -f $file ]; then
     while read line; do
-      pkg_config_path=($line $pkg_config_path)
+      pkg_config_path=(`eval echo $line` $pkg_config_path)
     done < $file
   fi
 done
