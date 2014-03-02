@@ -3,7 +3,7 @@
 autoload -Uz zmv
 alias zmv='noglob zmv -W '
 
-
+source ~/.zsh.d/haskell.zsh
 source ~/.zsh.d/path.zsh
 source ~/.zsh.d/prompt.zsh
 
@@ -68,18 +68,6 @@ source ~/.zsh.d/zaw/zaw.zsh
 
 ## Aliases #########################################################
 
-function e () {
-    if ! `emacsclient -n $@ 2> /dev/null`; then
-        case $OSTYPE in
-            darwin*)
-                open -a Emacs
-                while ! `emacsclient -e 'nil' &> /dev/null`; do
-                    sleep 1
-                done
-                emacsclient -n $@
-        esac
-    fi
-}
 
 alias la="ls -a "
 alias ll="ls -l "

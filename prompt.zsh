@@ -46,11 +46,12 @@ function zsh_prompt_remotehost(){
 }
 
 function zsh_prompt_cabal_sandbox() {
-  local glob
-  if [ -d ./.cabal-sandbox/ ]; then
-    glob=(./.cabal-sandbox/*/*.conf)
-    echo "%B%F{green}${#glob}%k%b "
-  fi
+  local db confs
+  db=`cabal_sandbox_package_db`
+  [ $? -ne 0 ] && return 1
+
+  confs=(`eval echo "$db/*.conf"`)
+  echo "%F{green}%B${#confs}%b%f "
 }
 
 zsh_prompt_directory="%F{yellow}%~%f"
