@@ -50,7 +50,7 @@ function zsh_prompt_cabal_sandbox() {
   db=`cabal_sandbox_package_db`
   [ $? -ne 0 ] && return 1
 
-  confs=(`eval echo "$db/*.conf"`)
+  confs=(`eval echo "$db/*.conf" 2> /dev/null`)
   echo "%F{green}%B${#confs}%b%f "
 }
 

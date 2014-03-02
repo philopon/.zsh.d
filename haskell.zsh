@@ -39,6 +39,7 @@ function _ghc-pkg () {
     ghc-pkg $@
   fi
 }
+
 alias ghc-pkg=_ghc-pkg
 alias runhaskell='_cabal_sandbox runhaskell'
 alias runghc='_cabal_sandbox runghc'
