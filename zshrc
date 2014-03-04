@@ -68,9 +68,16 @@ source ~/.zsh.d/zaw/zaw.zsh
 
 ## Aliases #########################################################
 
-
 alias la="ls -a "
 alias ll="ls -l "
 alias osxsleep="osascript -e 'tell application \"Finder\" to sleep'"
+
+alias vi=vim
+alias v=vim
+
+case $OSTYPE in
+    linux-gnu)
+        alias ls='ls --color ';;
+esac
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
