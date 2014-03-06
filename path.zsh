@@ -10,6 +10,11 @@ for file in ~/.paths/*; do
   typeset -U $lvar
 
   while read line; do
-    eval `echo ${lvar}=\(\"$(eval echo $line)\" $(eval echo \\$$lvar)\)`
+    dir=`eval echo $line`
+    if [ -d "$dir" ]; then
+      eval `echo ${lvar}=\(\"$dir\" $(eval echo \\$$lvar)\)`
+    else
+      echo $lvar Warging: $line is not directry.
+    fi
   done < $file
 done

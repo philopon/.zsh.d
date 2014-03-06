@@ -34,7 +34,7 @@ function _cabal_sandbox () {
 function _ghc-pkg () {
   cabal_sandbox_package_db &> /dev/null
   if [ $? -eq 0 ]; then
-    cabal sandbox hc-pkg $@
+    cabal sandbox hc-pkg -- $@
   else
     ghc-pkg $@
   fi
