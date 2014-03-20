@@ -1,4 +1,4 @@
-fpath=(~/.zsh.d/zsh-completions/src $fpath)
+fpath=(/usr/local/etc/bash_completion.d ~/.zsh.d/zsh-completions/src $fpath)
 
 for file in ~/.paths/*; do
   lvar=`basename $file`; lvar=${(L)lvar}

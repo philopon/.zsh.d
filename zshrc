@@ -7,7 +7,6 @@ source ~/.zsh.d/haskell.zsh
 source ~/.zsh.d/path.zsh
 source ~/.zsh.d/prompt.zsh
 
-
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
