@@ -67,6 +67,8 @@ source ~/.zsh.d/zaw/zaw.zsh
 
 ## Aliases #########################################################
 
+export EDITOR=vim
+
 alias la="ls -a "
 alias ll="ls -l "
 alias osxsleep="osascript -e 'tell application \"Finder\" to sleep'"
@@ -80,3 +82,4 @@ case $OSTYPE in
 esac
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
