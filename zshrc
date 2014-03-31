@@ -22,7 +22,7 @@ autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 
-## complete ##################################################
+## complete #################################################
 
 autoload -Uz compaudit
 autoload -Uz compinit; compinit -u
@@ -39,7 +39,7 @@ bindkey '^n' history-beginning-search-forward-end
 
 bindkey '^R' zaw-history
 
-## MISC ##########################################################    #######
+## MISC #####################################################
 
 disable r
 
@@ -65,13 +65,12 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 source ~/.zsh.d/zaw/zaw.zsh
 
-## Aliases #########################################################
+## Aliases ##################################################
 
 export EDITOR=vim
 
 alias la="ls -a "
 alias ll="ls -l "
-alias osxsleep="osascript -e 'tell application \"Finder\" to sleep'"
 
 alias vi=vim
 alias v=vim
@@ -79,6 +78,8 @@ alias v=vim
 case $OSTYPE in
     linux-gnu)
         alias ls='ls --color ';;
+    darwin* )
+        alias osxsleep="osascript -e 'tell application \"Finder\" to sleep'"
 esac
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
