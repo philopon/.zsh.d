@@ -18,3 +18,10 @@ for file in ~/.paths/*; do
     fi
   done < $file
 done
+
+base="$HOME/cabal-sandbox"
+for file in `ls $base`; do
+  bin=$base/$file/.cabal-sandbox/bin
+  [ -e $bin ] && path=($bin $path)
+done
+export path
