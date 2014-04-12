@@ -1,6 +1,6 @@
 fpath=(/usr/local/etc/bash_completion.d ~/.zsh.d/zsh-completions/src $fpath)
 
-for file in ~/.paths/*; do
+[ -d ~/.paths ] && for file in ~/.paths/*; do
   lvar=`basename $file`; lvar=${(L)lvar}
   uvar=${(U)lvar}
 
@@ -20,7 +20,7 @@ for file in ~/.paths/*; do
 done
 
 base="$HOME/cabal-sandbox"
-for file in `ls $base`; do
+[ -d $base ] && for file in `ls $base`; do
   bin=$base/$file/.cabal-sandbox/bin
   [ -e $bin ] && path=($bin $path)
 done
