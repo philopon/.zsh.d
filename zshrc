@@ -69,6 +69,11 @@ source ~/.zsh.d/zaw/zaw.zsh
 
 export EDITOR=vim
 
+dclean () {
+  docker rm `docker ps -a -q` 
+  docker rmi `docker images | awk '$1 == "<none>" && $2 == "<none>" {print $3}'`
+}
+
 alias la="ls -a "
 alias ll="ls -l "
 
