@@ -21,6 +21,12 @@ done
 
 base="$HOME/cabal-sandbox"
 [ -d $base ] && for file in `ls $base`; do
+  if [[ $file =~ "\.bak$" ]]; then
+    continue
+  fi
+  if [[ -e "$base/$file/no_link" ]]; then
+    continue
+  fi
   bin=$base/$file/.cabal-sandbox/bin
   [ -e $bin ] && path=($bin $path)
 done
