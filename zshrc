@@ -26,6 +26,7 @@ zle -N history-beginning-search-forward-end history-search-end
 
 autoload -Uz compaudit
 autoload -Uz compinit; compinit -u
+autoload -Uz bashcompinit; bashcompinit
 
 unsetopt automenu
 unsetopt list_ambiguous
