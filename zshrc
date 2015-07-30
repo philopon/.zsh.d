@@ -90,3 +90,7 @@ esac
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
+which direnv > /dev/null && eval "$(direnv hook zsh)"
+
+# added by travis gem
+[ -f /Users/philopon/.travis/travis.sh ] && source /Users/philopon/.travis/travis.sh
