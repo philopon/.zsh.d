@@ -1,8 +1,5 @@
 #!/bin/zsh
 
-autoload -Uz zmv
-alias zmv='noglob zmv -W '
-
 source ~/.zsh.d/haskell.zsh
 source ~/.zsh.d/path.zsh
 source ~/.zsh.d/prompt.zsh
@@ -53,15 +50,23 @@ setopt noflowcontrol
 
 zmodload zsh/mathfunc
 
-# BSD DIR, SYMLINK, SOCKET, PIPE, EXE, BLOCK_SP, CHAR_SP, EXE_SUID, EXE_GUID, DIR_STICKY, DIR_WO_STICKY
-# GNU  di,      ln,     so,   pi,  ex,       bd,      cd,       su,       sg,         tw,            ow
-
-# source $HOME/.zsh.d/lscolor.zsh
-# LSCOLORSCONF="di=Brown:default ln=magenta:default so=green:default pi=blue:default ex=red:default bd=blue:cyan cd=green:cyan su=cyan:red sg=blue:red tw=cyan:brown ow=blue:brown"
+source $HOME/.zsh.d/lscolor.zsh
+LSCOLORSCONF="\
+  di=Brown:default\
+  ln=magenta:default\
+  so=green:default\
+  pi=blue:default\
+  ex=red:default\
+  bd=blue:cyan\
+  cd=green:cyan\
+  su=cyan:red\
+  sg=blue:red\
+  tw=cyan:brown\
+  ow=blue:brown"
 
 export CLICOLOR=1
-export LSCOLORS='Dxfxcxexbxegcggbebgded' # lsColorsBSD $LSCOLORSCONF
-export LS_COLORS='di=01;33:ln=35:so=32:pi=34:ex=31:bd=34;46:cd=32;46:su=36;41:sg=34;41:tw=36;43:ow=34;43' # lsColorsGNU $LSCOLORSCONF
+export LSCOLORS=`lsColorsBSD $LSCOLORSCONF`
+export LS_COLORS=`lsColorsGNU $LSCOLORSCONF`
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 source ~/.zsh.d/zaw/zaw.zsh
@@ -70,27 +75,33 @@ source ~/.zsh.d/zaw/zaw.zsh
 
 export EDITOR=vim
 
-dclean () {
-  docker rm `docker ps -a -q` 
-  docker rmi `docker images | awk '$1 == "<none>" && $2 == "<none>" {print $3}'`
-}
-
 alias la="ls -a "
 alias ll="ls -l "
 
+command -v Vim > /dev/null && alias vim=Vim
+alias mvi=mvim
+
 alias vi=vim
-alias v=vim
 
 case $OSTYPE in
     linux-gnu)
         alias ls='ls --color ';;
-    darwin* )
-        alias osxsleep="osascript -e 'tell application \"Finder\" to sleep'"
 esac
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
-which direnv > /dev/null && eval "$(direnv hook zsh)"
+command -v direnv > /dev/null && eval "$(direnv hook zsh)"
 
-# added by travis gem
-[ -f /Users/philopon/.travis/travis.sh ] && source /Users/philopon/.travis/travis.sh
+## MKL #######################################################
+
+case "${OSTYPE}" in
+  darwin*)
+    MKL_NUM_THREADS=$(sysctl machdep.cpu.core_count)
+    MKL_NUM_THREADS=${MKL_NUM_THREADS#*: }
+    ;;
+  linux*)
+    MKL_NUM_THREADS=`~/.zsh.d/physical-cores.py`
+    ;;
+esac
+
+export MKL_NUM_THREADS
