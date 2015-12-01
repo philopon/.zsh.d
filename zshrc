@@ -73,24 +73,27 @@ source ~/.zsh.d/zaw/zaw.zsh
 
 ## Aliases ##################################################
 
-export EDITOR=vim
-
 alias la="ls -a "
 alias ll="ls -l "
 
-command -v Vim > /dev/null && alias vim=Vim
-alias mvi=mvim
-
+export EDITOR=vim
+if [[ "$OSTYPE" =~ "darwin" ]] && command -v mvim > /dev/null; then
+    alias gvim=mvim
+    alias gvi=mvim
+    alias gv=mvim
+    alias vim=Vim
+fi
 alias vi=vim
 
-case $OSTYPE in
+case "$OSTYPE" in
     linux-gnu)
         alias ls='ls --color ';;
 esac
 
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-command -v direnv > /dev/null && eval "$(direnv hook zsh)"
+alias ghc="stack ghc"
+alias ghci="stack ghci"
+alias runghc="stack runghc"
+alias runhaskell="stack runghc"
 
 ## MKL #######################################################
 
@@ -107,3 +110,12 @@ esac
 OMP_NUM_THREADS=$MKL_NUM_THREADS
 
 export MKL_NUM_THREADS OMP_NUM_THREADS
+
+
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+which direnv > /dev/null && eval "$(direnv hook zsh)"
+
+# export PYTHONUSERBASE=$HOME/python/global
+
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
