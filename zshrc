@@ -8,6 +8,7 @@ if [[ ! -f $ZPLUG_HOME/zplug ]] &> /dev/null; then
 fi
 
 source $ZPLUG_HOME/zplug
+source $ZSHD/plugins.zsh
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
