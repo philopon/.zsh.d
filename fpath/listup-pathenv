@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
-listup_paths(){
+__listup_pathenv::listup_paths(){
+    local file list line path
     file=$1
 
     list=()
@@ -16,11 +17,14 @@ listup_paths(){
     echo ${(j/:/)list}
 }
 
-if ! (($+1)) || [[ ! -d $1 ]]; then
+
+if [[ -z "$1" ]] || [[ ! -d $1 ]]; then
     echo "USAGE: eval \$($0 \$DIR)" >&2
-    exit 1
+    return 1
 fi
 
+local file
 for file in $1/*; do
-    echo "export ${file:t}=$(listup_paths $file):\$${file:t}"
+    echo "typeset -U ${file:t}"
+    echo "export ${file:t}=$(__listup_pathenv::listup_paths $file):\$${file:t}"
 done

@@ -60,9 +60,9 @@ sg=ag
 tw=ac
 ow=ad
 
-if ! (($+1)); then
+if [[ -z "$1" ]]; then
     echo "USAGE: LSCOLORS=\$($0 \$LS_COLORS)" >&2
-    exit 1
+    return 1
 fi
 
 for coldef in ${(s/:/)1}; do

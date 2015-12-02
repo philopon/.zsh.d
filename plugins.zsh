@@ -4,3 +4,4 @@ zplug seebi/dircolors-solarized
 zplug mollifier/anyframe
 zplug themes/steeef,from:oh-my-zsh
 zplug zsh-users/zsh-completions
+zplug jocelynmallon/zshmarks

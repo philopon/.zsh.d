@@ -1,4 +1,5 @@
 ZSHD=$HOME/${$(readlink ~/.zshrc):h} 
+fpath=($ZSHD/fpath(N-/) $fpath)
 
 #{{{ zplug
 export ZPLUG_HOME=$ZSHD/zplug
@@ -21,16 +22,24 @@ zplug load
 #}}}
 
 #{{{ misc config
-autoload -Uz colors
-colors
-
 export HISTFILE=$ZSHD/history
 export HISTSIZE=100000
 export SAVEHIST=100000
 
+autoload -Uz history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey '^p' history-beginning-search-backward-end
+bindkey '^n' history-beginning-search-forward-end
+
+autoload -Uz listup-pathenv
+eval $(listup-pathenv ~/.paths)
+
 setopt PROMPT_SUBST
 
-eval $($ZSHD/bin/paths.zsh ~/.paths)
+autoload -Uz compaudit; compaudit
+autoload -Uz compinit; compinit
+unsetopt automenu
 #}}}
 
 #{{{ vim alias, EDITOR
@@ -45,12 +54,12 @@ export EDITOR=vim
 #}}}
 
 #{{{ anyframe
-autoload -Uz anyframe-init 
-anyframe-init
-
 zstyle ":anyframe:selector:" use fzf
 
-bindkey '^r' anyframe-widget-execute-history
+bindkey '^r' anyframe-widget-put-history
+bindkey '^x^k' anyframe-widget-kill
+bindkey '^x^f' anyframe-widget-insert-filename
+bindkey '^x^j' anyframe-widget-zshmark-jump
 #}}}
 
 #{{{ LS_COLORS
@@ -76,4 +85,4 @@ alias la="ls -a"
 command -v direnv > /dev/null && eval "$(direnv hook zsh)"
 #}}}
 
-# vim:set foldmethod=marker foldmarker={{{,}}} :
+# vim:set ft=zsh foldmethod=marker foldmarker={{{,}}} :

@@ -1,0 +1,4 @@
+showmarks \
+    | anyframe-selector-auto \
+    | cut -f1 | xargs echo jump \
+    | anyframe-action-execute
