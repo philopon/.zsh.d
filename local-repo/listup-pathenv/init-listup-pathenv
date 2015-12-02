@@ -17,14 +17,15 @@ __listup_pathenv::listup_paths(){
     echo ${(j/:/)list}
 }
 
+listup-pathenv(){
+    if [[ -z "$1" ]] || [[ ! -d $1 ]]; then
+        echo "USAGE: eval \$($0 \$DIR)" >&2
+        return 1
+    fi
 
-if [[ -z "$1" ]] || [[ ! -d $1 ]]; then
-    echo "USAGE: eval \$($0 \$DIR)" >&2
-    return 1
-fi
-
-local file
-for file in $1/*; do
-    echo "typeset -U ${file:t}"
-    echo "export ${file:t}=$(__listup_pathenv::listup_paths $file):\$${file:t}"
-done
+    local file
+    for file in $1/*; do
+        echo "typeset -U ${file:t}"
+        echo "export ${file:t}=$(__listup_pathenv::listup_paths $file):\$${file:t}"
+    done
+}

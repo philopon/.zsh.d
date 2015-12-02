@@ -1,27 +1,23 @@
 # PROFILING=1
 [[ -n "$PROFILING" ]] && zmodload zsh/zprof && zprof
 
-ZSHD=$HOME/${$(readlink ~/.zshrc):h} 
-fpath=($ZSHD/fpath(N-/) $fpath)
+ZSH_DIR=$HOME/.zsh.d
+fpath=($ZSH_DIR/fpath(N-/) $fpath)
 
-#{{{ zplug
-export ZPLUG_HOME=$ZSHD/zplug
+#{{{ zgen
+ZGEN_DIR=$ZSH_DIR/.zgen
+ZGEN_RESEt_ON_CHANGE=($ZSH_DIR/zshrc $ZSH_DIR/plugins.zsh)
 
-if [[ ! -f $ZPLUG_HOME/zplug ]] &> /dev/null; then
-    curl -fLo $ZPLUG_HOME/zplug --create-dirs git.io/zplug
+if [ ! -f "$ZSH_DIR/zgen/zgen.zsh" ]; then
+    git clone https://github.com/tarjoilija/zgen.git $ZSH_DIR/zgen
 fi
 
-source $ZPLUG_HOME/zplug
-source $ZSHD/plugins.zsh
+source $ZSH_DIR/zgen/zgen.zsh
 
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+if ! zgen saved; then
+    source $ZSH_DIR/plugins.zsh
+    zgen save
 fi
-
-zplug load
 #}}}
 
 #{{{ misc config
@@ -71,7 +67,7 @@ bindkey '^x^j' anyframe-widget-zshmark-jump
 #}}}
 
 #{{{ LS_COLORS
-DIRCOLORS_THEME=$ZPLUG_HOME/repos/seebi/dircolors-solarized/dircolors.ansi-dark
+DIRCOLORS_THEME=$ZGEN_DIR/seebi/dircolors-solarized-master/dircolors.ansi-dark
 command -v gdircolors &> /dev/null && DIRCOLORS=gdircolors
 command -v dircolors &> /dev/null && DIRCOLORS=dircolors
 
@@ -100,6 +96,7 @@ case "$OSTYPE" in
     ;;
 esac
 #}}}
+
 
 if (which zprof > /dev/null) ;then
   zprof | less
