@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+
+__listup_pathenv::listup_paths(){
+    local file list line path
+    file=$1
+
+    list=()
+    while read line; do
+        path=${line/\~/$HOME}
+        if [[ -d "$path" ]]; then
+            list+=($path)
+        else
+            echo "$line is not exists" >&2
+        fi
+    done < $file
+
+    echo ${(j/:/)list}
+}
+
+listup-pathenv(){
+    if [[ -z "$1" ]] || [[ ! -d $1 ]]; then
+        echo "USAGE: eval \$($0 \$DIR)" >&2
+        return 1
+    fi
+
+    local file
+    for file in $1/*; do
+        echo "typeset -U ${file:t}"
+        echo "export ${file:t}=$(__listup_pathenv::listup_paths $file):\$${file:t}"
+    done
+}

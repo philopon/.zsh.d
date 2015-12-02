@@ -1,12 +1,29 @@
-#!/bin/zsh
+# PROFILING=1
+[[ -n "$PROFILING" ]] && zmodload zsh/zprof && zprof
 
-source ~/.zsh.d/haskell.zsh
-source ~/.zsh.d/path.zsh
-source ~/.zsh.d/prompt.zsh
+ZSH_DIR=$HOME/.zsh.d
+fpath=($ZSH_DIR/fpath(N-/) $fpath)
 
-HISTFILE=$HOME/.zsh_history
-HISTSIZE=100000
-SAVEHIST=100000
+#{{{ zgen
+ZGEN_DIR=$ZSH_DIR/.zgen
+ZGEN_RESEt_ON_CHANGE=($ZSH_DIR/zshrc $ZSH_DIR/plugins.zsh)
+
+if [ ! -f "$ZSH_DIR/zgen/zgen.zsh" ]; then
+    git clone https://github.com/tarjoilija/zgen.git $ZSH_DIR/zgen
+fi
+
+source $ZSH_DIR/zgen/zgen.zsh
+
+if ! zgen saved; then
+    source $ZSH_DIR/plugins.zsh
+    zgen save
+fi
+#}}}
+
+#{{{ misc config
+export HISTFILE=$ZSHD/history
+export HISTSIZE=100000
+export SAVEHIST=100000
 setopt append_history
 setopt extended_history
 setopt hist_ignore_all_dups
@@ -18,104 +35,71 @@ setopt auto_pushd
 autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
-
-## complete #################################################
-
-autoload -Uz compaudit
-autoload -Uz compinit; compinit -u
-autoload -Uz bashcompinit; bashcompinit
-
-unsetopt automenu
-unsetopt list_ambiguous
-
-## Keybind ##################################################
-
-setopt emacs
-
 bindkey '^p' history-beginning-search-backward-end
 bindkey '^n' history-beginning-search-forward-end
 
-bindkey '^R' zaw-history
+autoload -Uz listup-pathenv
+eval $(listup-pathenv ~/.paths)
 
-## MISC #####################################################
+setopt PROMPT_SUBST
 
-disable r
+unsetopt automenu
+#}}}
 
-setopt clobber
-setopt correct
-setopt mail_warning
-
-setopt auto_continue
-setopt noflowcontrol
-
-zmodload zsh/mathfunc
-
-source $HOME/.zsh.d/lscolor.zsh
-LSCOLORSCONF="\
-  di=Brown:default\
-  ln=magenta:default\
-  so=green:default\
-  pi=blue:default\
-  ex=red:default\
-  bd=blue:cyan\
-  cd=green:cyan\
-  su=cyan:red\
-  sg=blue:red\
-  tw=cyan:brown\
-  ow=blue:brown"
-
-export CLICOLOR=1
-export LSCOLORS=`lsColorsBSD $LSCOLORSCONF`
-export LS_COLORS=`lsColorsGNU $LSCOLORSCONF`
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-
-source ~/.zsh.d/zaw/zaw.zsh
-
-## Aliases ##################################################
-
-alias la="ls -a "
-alias ll="ls -l "
-
-export EDITOR=vim
-if [[ "$OSTYPE" =~ "darwin" ]] && command -v mvim > /dev/null; then
-    alias gvim=mvim
-    alias gvi=mvim
-    alias gv=mvim
+#{{{ vim alias, EDITOR
+if command -v Vim &> /dev/null; then 
     alias vim=Vim
 fi
+
 alias vi=vim
+alias v=vim
 
+export EDITOR=vim
+#}}}
+
+#{{{ anyframe
+zstyle ":anyframe:selector:" use fzf
+
+bindkey '^r' anyframe-widget-put-history
+bindkey '^x^k' anyframe-widget-kill
+bindkey '^x^f' anyframe-widget-insert-filename
+bindkey '^x^j' anyframe-widget-zshmark-jump
+#}}}
+
+#{{{ LS_COLORS
+DIRCOLORS_THEME=$ZGEN_DIR/seebi/dircolors-solarized-master/dircolors.ansi-dark
+command -v gdircolors &> /dev/null && DIRCOLORS=gdircolors
+command -v dircolors &> /dev/null && DIRCOLORS=dircolors
+
+if [[ -n "$DIRCOLORS" ]] && [[ -f "$DIRCOLORS_THEME" ]]; then
+    eval $(gdircolors $DIRCOLORS_THEME)
+    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+fi
+
+command -v gls &> /dev/null && alias ls="gls --color=auto"
+#}}}
+
+#{{{ ls aliases
+alias ll="ls -l"
+alias llh="ll -h"
+alias la="ls -a"
+#}}}
+
+#{{{ direnv
+command -v direnv > /dev/null && eval "$(direnv hook zsh)"
+#}}}
+
+#{{{ OS specific
 case "$OSTYPE" in
-    linux-gnu)
-        alias ls='ls --color ';;
-esac
-
-alias ghc="stack ghc"
-alias ghci="stack ghci"
-alias runghc="stack runghc"
-alias runhaskell="stack runghc"
-
-## MKL #######################################################
-
-case "${OSTYPE}" in
-  darwin*)
-    MKL_NUM_THREADS=$(sysctl machdep.cpu.core_count)
-    MKL_NUM_THREADS=${MKL_NUM_THREADS#*: }
-    ;;
-  linux*)
-    MKL_NUM_THREADS=`~/.zsh.d/physical-cores.py`
+    darwin*)
+        export HOMEBREW_CASK_OPTS="--appdir=/Applications"
     ;;
 esac
-
-OMP_NUM_THREADS=$MKL_NUM_THREADS
-
-export MKL_NUM_THREADS OMP_NUM_THREADS
+#}}}
 
 
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+if (which zprof > /dev/null) ;then
+  zprof | less
+fi
 
-which direnv > /dev/null && eval "$(direnv hook zsh)"
-
-# export PYTHONUSERBASE=$HOME/python/global
-
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+# vim:set ft=zsh foldmethod=marker foldmarker={{{,}}} :
