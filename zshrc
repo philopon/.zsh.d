@@ -6,7 +6,7 @@ fpath=($ZSH_DIR/fpath(N-/) $fpath)
 
 #{{{ zgen
 ZGEN_DIR=$ZSH_DIR/.zgen
-ZGEN_RESEt_ON_CHANGE=($ZSH_DIR/zshrc $ZSH_DIR/plugins.zsh)
+ZGEN_RESET_ON_CHANGE=($ZSH_DIR/zshrc $ZSH_DIR/plugins.zsh)
 
 if [ ! -f "$ZSH_DIR/zgen/zgen.zsh" ]; then
     git clone https://github.com/tarjoilija/zgen.git $ZSH_DIR/zgen
@@ -21,7 +21,7 @@ fi
 #}}}
 
 #{{{ misc config
-export HISTFILE=$ZSHD/history
+export HISTFILE=$ZSH_DIR/history
 export HISTSIZE=100000
 export SAVEHIST=100000
 setopt append_history
@@ -97,9 +97,10 @@ case "$OSTYPE" in
 esac
 #}}}
 
-
+#{{{ profile result
 if (which zprof > /dev/null) ;then
   zprof | less
 fi
+#}}}
 
 # vim:set ft=zsh foldmethod=marker foldmarker={{{,}}} :
