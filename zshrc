@@ -84,7 +84,6 @@ if [[ -n "$DIRCOLORS" ]] && [[ -f "$DIRCOLORS_THEME" ]]; then
     zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 fi
 
-command -v gls > /dev/null && alias ls="gls --color=auto"
 #}}}
 
 #{{{ ls aliases
@@ -100,7 +99,11 @@ command -v direnv > /dev/null && eval "$(direnv hook zsh)"
 #{{{ OS specific
 case "$OSTYPE" in
     darwin*)
+        command -v gls > /dev/null && alias ls="gls --color=auto"
         export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+    ;;
+    linux*)
+        alias ls='ls --color=auto'
     ;;
 esac
 #}}}
