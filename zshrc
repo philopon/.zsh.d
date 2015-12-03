@@ -6,7 +6,7 @@ fpath=($ZSH_DIR/fpath(N-/) $fpath)
 
 #{{{ zgen
 ZGEN_DIR=$ZSH_DIR/.zgen
-ZGEN_RESET_ON_CHANGE=($ZSH_DIR/zshrc $ZSH_DIR/plugins.zsh)
+ZGEN_RESET_ON_CHANGE=($ZSH_DIR/plugins.zsh)
 
 if [ ! -f "$ZSH_DIR/zgen/zgen.zsh" ]; then
     git clone https://github.com/tarjoilija/zgen.git $ZSH_DIR/zgen
