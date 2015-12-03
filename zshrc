@@ -46,8 +46,16 @@ setopt PROMPT_SUBST
 unsetopt automenu
 #}}}
 
+#{{{fzf
+FZF_DIR=$ZGEN_DIR/junegunn/fzf-master
+$FZF_DIR/install --bin > /dev/null
+export PATH=$FZF_DIR/bin:$PATH
+source $FZF_DIR/shell/completion.zsh
+source $FZF_DIR/shell/key-bindings.zsh
+#}}}
+
 #{{{ vim alias, EDITOR
-if command -v Vim &> /dev/null; then 
+if command -v Vim > /dev/null; then
     alias vim=Vim
 fi
 
@@ -58,7 +66,7 @@ export EDITOR=vim
 #}}}
 
 #{{{ anyframe
-zstyle ":anyframe:selector:" use fzf
+command -v fzf > /dev/null && zstyle ":anyframe:selector:" use fzf
 
 bindkey '^r' anyframe-widget-put-history
 bindkey '^x^k' anyframe-widget-kill
@@ -68,15 +76,15 @@ bindkey '^x^j' anyframe-widget-zshmark-jump
 
 #{{{ LS_COLORS
 DIRCOLORS_THEME=$ZGEN_DIR/seebi/dircolors-solarized-master/dircolors.ansi-dark
-command -v gdircolors &> /dev/null && DIRCOLORS=gdircolors
-command -v dircolors &> /dev/null && DIRCOLORS=dircolors
+command -v gdircolors > /dev/null && DIRCOLORS=gdircolors
+command -v dircolors > /dev/null && DIRCOLORS=dircolors
 
 if [[ -n "$DIRCOLORS" ]] && [[ -f "$DIRCOLORS_THEME" ]]; then
     eval $(gdircolors $DIRCOLORS_THEME)
     zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 fi
 
-command -v gls &> /dev/null && alias ls="gls --color=auto"
+command -v gls > /dev/null && alias ls="gls --color=auto"
 #}}}
 
 #{{{ ls aliases
@@ -104,3 +112,5 @@ fi
 #}}}
 
 # vim:set ft=zsh foldmethod=marker foldmarker={{{,}}} :
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

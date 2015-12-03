@@ -4,6 +4,8 @@ zgen load mollifier/anyframe
 zgen load zsh-users/zsh-completions
 zgen load jocelynmallon/zshmarks
 
+zgen load junegunn/fzf
+
 zgen oh-my-zsh themes/steeef
 
 zgen load $ZSH_DIR/local-repo/listup-pathenv
