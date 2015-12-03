@@ -80,7 +80,7 @@ command -v gdircolors > /dev/null && DIRCOLORS=gdircolors
 command -v dircolors > /dev/null && DIRCOLORS=dircolors
 
 if [[ -n "$DIRCOLORS" ]] && [[ -f "$DIRCOLORS_THEME" ]]; then
-    eval $(gdircolors $DIRCOLORS_THEME)
+    eval $($DIRCOLORS $DIRCOLORS_THEME)
     zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 fi
 
