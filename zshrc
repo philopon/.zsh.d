@@ -109,7 +109,7 @@ esac
 #}}}
 
 #{{{ profile result
-if (which zprof > /dev/null) ;then
+if (command -v zprof > /dev/null) ;then
   zprof | less
 fi
 #}}}
