@@ -4,20 +4,31 @@
 ZSH_DIR=$HOME/.zsh.d
 fpath=($ZSH_DIR/fpath(N-/) $fpath)
 
-#{{{ zgen
-ZGEN_DIR=$ZSH_DIR/.zgen
-ZGEN_RESET_ON_CHANGE=($ZSH_DIR/plugins.zsh)
+autoload -Uz listup-pathenv
+eval $(listup-pathenv ~/.paths)
 
-if [ ! -f "$ZSH_DIR/zgen/zgen.zsh" ]; then
-    git clone https://github.com/tarjoilija/zgen.git $ZSH_DIR/zgen
+#{{{ zplug
+ZPLUG_HOME=$ZSH_DIR/zplug
+path=($ZPLUG_HOME/bin $path)
+
+if [ ! -f "$ZPLUG_HOME/zplug" ]; then
+    curl -fLo $ZPLUG_HOME/zplug --create-dirs https://git.io/zplug
+    source $ZPLUG_HOME/zplug
+    zplug update --self
+else
+    source $ZPLUG_HOME/zplug
 fi
 
-source $ZSH_DIR/zgen/zgen.zsh
+source $ZSH_DIR/plugins.zsh
 
-if ! zgen saved; then
-    source $ZSH_DIR/plugins.zsh
-    zgen save
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
 fi
+
+zplug load
 #}}}
 
 #{{{ misc config
@@ -38,20 +49,9 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey '^p' history-beginning-search-backward-end
 bindkey '^n' history-beginning-search-forward-end
 
-autoload -Uz listup-pathenv
-eval $(listup-pathenv ~/.paths)
-
 setopt PROMPT_SUBST
 
 unsetopt automenu
-#}}}
-
-#{{{fzf
-FZF_DIR=$ZGEN_DIR/junegunn/fzf-master
-$FZF_DIR/install --bin > /dev/null
-export PATH=$FZF_DIR/bin:$PATH
-source $FZF_DIR/shell/completion.zsh
-source $FZF_DIR/shell/key-bindings.zsh
 #}}}
 
 #{{{ vim alias, EDITOR
@@ -75,7 +75,7 @@ bindkey '^x^j' anyframe-widget-zshmark-jump
 #}}}
 
 #{{{ LS_COLORS
-DIRCOLORS_THEME=$ZGEN_DIR/seebi/dircolors-solarized-master/dircolors.ansi-dark
+DIRCOLORS_THEME=$ZPLUG_HOME/repos/seebi/dircolors-solarized/dircolors.ansi-dark
 command -v gdircolors > /dev/null && DIRCOLORS=gdircolors
 command -v dircolors > /dev/null && DIRCOLORS=dircolors
 
