@@ -6,8 +6,8 @@ zplug mollifier/anyframe
 zplug zsh-users/zsh-completions
 zplug jocelynmallon/zshmarks
 
-zplug "junegunn/fzf-bin", as:command, from:gh-r, file:fzf
+zplug junegunn/fzf, as:command, do:"rm fzf && ./install --bin", of:"bin/{fzf,fzf-tmux}"
 
-zplug 'fumiyas/home-commands', as:command, of:echo-sd
+zplug fumiyas/home-commands, as:command, of:echo-sd
 
 zplug themes/steeef, from:oh-my-zsh

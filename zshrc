@@ -9,7 +9,6 @@ eval $(listup-pathenv ~/.paths)
 
 #{{{ zplug
 ZPLUG_HOME=$ZSH_DIR/.zplug
-path=($ZPLUG_HOME/bin $path)
 
 if [ ! -f "$ZPLUG_HOME/zplug" ]; then
     curl -fLo $ZPLUG_HOME/zplug --create-dirs https://git.io/zplug
@@ -121,5 +120,3 @@ fi
 #}}}
 
 # vim:set ft=zsh foldmethod=marker foldmarker={{{,}}} :
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
