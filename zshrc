@@ -8,7 +8,7 @@ autoload -Uz listup-pathenv
 eval $(listup-pathenv ~/.paths)
 
 #{{{ zplug
-ZPLUG_HOME=$ZSH_DIR/zplug
+ZPLUG_HOME=$ZSH_DIR/.zplug
 path=($ZPLUG_HOME/bin $path)
 
 if [ ! -f "$ZPLUG_HOME/zplug" ]; then
@@ -32,7 +32,7 @@ zplug load
 #}}}
 
 #{{{ misc config
-export HISTFILE=$ZSH_DIR/history
+export HISTFILE=$ZSH_DIR/.history
 export HISTSIZE=100000
 export SAVEHIST=100000
 setopt append_history
@@ -50,17 +50,23 @@ bindkey '^p' history-beginning-search-backward-end
 bindkey '^n' history-beginning-search-forward-end
 
 setopt PROMPT_SUBST
+setopt complete_aliases
 
 unsetopt automenu
 #}}}
+
+alias ghc="stack ghc --"; compdef ghc=ghc
+alias ghci="stack ghci"; compdef ghci=ghc
+alias runghc="stack runghc --"; compdef ghci=ghc
+alias runhaskell="stack runghc --"; compdef ghci=ghc
 
 #{{{ vim alias, EDITOR
 if command -v Vim > /dev/null; then
     alias vim=Vim
 fi
 
-alias vi=vim
-alias v=vim
+alias vi=vim; compdef vi=vim
+alias v=vim; compdef v=vim
 
 export EDITOR=vim
 #}}}
@@ -87,9 +93,9 @@ fi
 #}}}
 
 #{{{ ls aliases
-alias ll="ls -l"
-alias llh="ll -h"
-alias la="ls -a"
+alias ll="ls -l"; compdef ll=ls
+alias llh="ll -h"; compdef llh=ls
+alias la="ls -a"; compdef la=ls
 #}}}
 
 #{{{ direnv
