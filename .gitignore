@@ -1,2 +1,6 @@
 /.history
-/.zplug/
+/.cache
+/bin/
+/repos/
+/zcompdump
+/zplug

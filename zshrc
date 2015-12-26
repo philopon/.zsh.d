@@ -8,7 +8,7 @@ autoload -Uz listup-pathenv
 eval $(listup-pathenv ~/.paths)
 
 #{{{ zplug
-ZPLUG_HOME=$ZSH_DIR/.zplug
+ZPLUG_HOME=$ZSH_DIR
 
 if [ ! -f "$ZPLUG_HOME/zplug" ]; then
     curl -fLo $ZPLUG_HOME/zplug --create-dirs https://git.io/zplug
