@@ -2,10 +2,6 @@
 [[ -n "$PROFILING" ]] && zmodload zsh/zprof && zprof
 
 ZSH_DIR=$HOME/.zsh.d
-fpath=($ZSH_DIR/fpath(N-/) $fpath)
-
-autoload -Uz listup-pathenv
-eval $(listup-pathenv ~/.paths)
 
 #{{{ zplug
 ZPLUG_HOME=$ZSH_DIR
@@ -31,6 +27,8 @@ zplug load
 #}}}
 
 #{{{ misc config
+eval $(listup-pathenv ~/.paths)
+
 export HISTFILE=$ZSH_DIR/.history
 export HISTSIZE=100000
 export SAVEHIST=100000

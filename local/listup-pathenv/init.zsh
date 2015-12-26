@@ -17,7 +17,7 @@ __listup-pathenv::listup-paths(){
     echo ${(j/:/)list}
 }
 
-__listup-pathenv::main(){
+listup-pathenv(){
     if [[ -z "$1" ]]; then
         echo "USAGE: eval \$($0 \$DIR)" >&2
         return 1
@@ -36,5 +36,3 @@ __listup-pathenv::main(){
         done
     fi
 }
-
-__listup-pathenv::main $1
