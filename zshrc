@@ -2,6 +2,7 @@
 [[ -n "$PROFILING" ]] && zmodload zsh/zprof && zprof
 
 ZSH_DIR=$HOME/.zsh.d
+ZDOTDIR=$ZSH_DIR
 
 #{{{ zplug
 ZPLUG_HOME=$ZSH_DIR
