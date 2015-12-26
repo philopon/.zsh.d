@@ -52,7 +52,7 @@ convert-lscolors(){
         coldef kv target colors
 
     if [[ -z "$1" ]]; then
-        echo "USAGE: LSCOLORS=\$($0 \$LS_COLORS)" >&2
+        echo "USAGE: export LSCOLORS=\$($0 \$LS_COLORS)" >&2
         return 1
     fi
 
@@ -86,4 +86,15 @@ convert-lscolors(){
     done
 
     echo $di$ln$so$pi$ex$bd$cd$su$sg$tw$ow
+}
+
+register-lscolors(){
+    local THEME=$1 DIRCOLORS_CMD
+
+    command -v gdircolors > /dev/null && DIRCOLORS_CMD=gdircolors
+    command -v dircolors > /dev/null && DIRCOLORS_CMD=dircolors
+
+    eval $($DIRCOLORS_CMD $THEME)
+    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+    export LSCOLORS=$(convert-lscolors $LS_COLORS)
 }

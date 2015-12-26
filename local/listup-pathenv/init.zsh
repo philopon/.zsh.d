@@ -17,7 +17,7 @@ __listup-pathenv::listup-paths(){
     echo ${(j/:/)list}
 }
 
-listup-pathenv(){
+__listup-pathenv::main(){
     if [[ -z "$1" ]]; then
         echo "USAGE: eval \$($0 \$DIR)" >&2
         return 1
@@ -31,8 +31,9 @@ listup-pathenv(){
     if [[ -d "$1" ]]; then
         local file
         for file in $1/*; do
-            echo "typeset -U ${file:t}"
             echo "export ${file:t}=$(__listup-pathenv::listup-paths $file):\$${file:t}"
         done
     fi
 }
+
+eval $(__listup-pathenv::main ~/.paths)

@@ -27,8 +27,6 @@ zplug load
 #}}}
 
 #{{{ misc config
-eval $(listup-pathenv ~/.paths)
-
 export HISTFILE=$ZSH_DIR/.history
 export HISTSIZE=100000
 export SAVEHIST=100000
@@ -62,31 +60,22 @@ if command -v Vim > /dev/null; then
     alias vim=Vim
 fi
 
-alias vi=vim; compdef vi=vim
-alias v=vim; compdef v=vim
+if command -v vim > /dev/null; then
+    alias vi=vim; compdef vi=vim
+    alias v=vim; compdef v=vim
 
-export EDITOR=vim
+    export EDITOR=vim
+fi
 #}}}
 
 #{{{ anyframe
-command -v fzf > /dev/null && zstyle ":anyframe:selector:" use fzf
+if zplug check mollifier/anyframe; then
+    command -v fzf > /dev/null && zstyle ":anyframe:selector:" use fzf
 
-bindkey '^r' anyframe-widget-put-history
-bindkey '^x^k' anyframe-widget-kill
-bindkey '^x^f' anyframe-widget-insert-filename
-bindkey '^x^j' anyframe-widget-zshmark-jump
-#}}}
-
-#{{{ LS_COLORS
-DIRCOLORS_THEME=$ZPLUG_HOME/repos/seebi/dircolors-solarized/dircolors.ansi-dark
-command -v gdircolors > /dev/null && DIRCOLORS=gdircolors
-command -v dircolors > /dev/null && DIRCOLORS=dircolors
-
-if [[ -n "$DIRCOLORS" ]] && [[ -f "$DIRCOLORS_THEME" ]]; then
-    eval $($DIRCOLORS $DIRCOLORS_THEME)
-    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+    bindkey '^r' anyframe-widget-put-history
+    bindkey '^x^k' anyframe-widget-kill
+    bindkey '^x^f' anyframe-widget-insert-filename
 fi
-
 #}}}
 
 #{{{ ls aliases
@@ -116,5 +105,21 @@ if (command -v zprof > /dev/null) ;then
   zprof | less
 fi
 #}}}
+
+if zplug check b4b4r07/enhancd; then
+    export ENHANCD_DIR=$ZSH_DIR/.enhancd
+    export ENHANCD_LOG=$ENHANCD_DIR/enhancd.log
+
+    _enhancd-cd(){
+        cd
+        local f
+        for f in $precmd_functions; do
+            $f
+        done
+        zle reset-prompt
+    }
+    zle -N _enhancd-cd
+    bindkey '^x^j' _enhancd-cd
+fi
 
 # vim:set ft=zsh foldmethod=marker foldmarker={{{,}}} :
