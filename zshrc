@@ -4,6 +4,27 @@
 ZSH_DIR=$HOME/.zsh.d
 ZDOTDIR=$ZSH_DIR
 
+# {{{ tmux
+__attach-tmux(){
+    local result
+
+    result=`set -o pipefail\
+        ; cat <(tmux list-session 2> /dev/null | grep -v '(attached)$') <(echo ":: new session")\
+        | fzf --select-1 --exit-0\
+        | cut -d: -f1`
+
+    [[ "$?" -ne 0 ]] && return 1
+
+    if [[ -z "$result" ]]; then
+        exec tmux new-session
+    else
+        exec tmux attach-session -t $result
+    fi
+}
+
+[[ -f "$ZSH_DIR/.tmux_loader" && -n "$SSH_CONNECTION" ]] && source "$ZSH_DIR/.tmux_loader"
+# }}}
+
 #{{{ zplug
 ZPLUG_HOME=$ZSH_DIR
 
@@ -121,6 +142,17 @@ if zplug check b4b4r07/enhancd; then
     }
     zle -N _enhancd-cd
     bindkey '^x^j' _enhancd-cd
+fi
+
+
+if [[ ! -f "$ZSH_DIR/.tmux_loader" ]]; then
+    cat <<EOF > $ZSH_DIR/.tmux_loader
+PATH=$PATH
+if command -v tmux > /dev/null; then
+    [[ -z "\$TMUX" ]] && __attach-tmux
+fi
+EOF
+    source $ZSH_DIR/.tmux_loader
 fi
 
 # vim:set ft=zsh foldmethod=marker foldmarker={{{,}}} :
