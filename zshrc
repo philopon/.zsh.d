@@ -28,6 +28,7 @@ __attach-tmux(){
 #{{{ zplug
 ZPLUG_HOME=$ZSH_DIR
 
+[[ -d "$ZPLUG_HOME/zplug" ]] && rm -rf "$ZPLUG_HOME/zplug"
 if [ ! -f "$ZPLUG_HOME/zplug" ]; then
     curl -fLo $ZPLUG_HOME/zplug --create-dirs https://git.io/zplug
     source $ZPLUG_HOME/zplug
