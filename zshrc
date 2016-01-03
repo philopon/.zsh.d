@@ -4,6 +4,8 @@
 ZSH_DIR=$HOME/.zsh.d
 ZDOTDIR=$ZSH_DIR
 
+export ENHANCD_DIR=$ZSH_DIR/.enhancd
+
 # {{{ tmux
 __attach-tmux(){
     local result
@@ -49,6 +51,14 @@ fi
 zplug load
 #}}}
 
+# {{{ check updates
+[[ ! -f $ZSH_DIR/.last_updated ]] && echo 0 > $ZSH_DIR/.last_updated
+if [[ `date +%s` -gt $((`cat $ZSH_DIR/.last_updated` + 24 * 3600)) ]]; then
+    zplug status
+    date +%s > $ZSH_DIR/.last_updated
+fi
+# }}}
+
 #{{{ misc config
 export HISTFILE=$ZSH_DIR/.history
 export HISTSIZE=100000
@@ -73,10 +83,12 @@ setopt complete_aliases
 unsetopt automenu
 #}}}
 
+# {{{ haskell alias
 alias ghc="stack ghc --"; compdef ghc=ghc
 alias ghci="stack ghci"; compdef ghci=ghc
 alias runghc="stack runghc --"; compdef ghci=ghc
 alias runhaskell="stack runghc --"; compdef ghci=ghc
+# }}}
 
 #{{{ vim alias, EDITOR
 if command -v Vim > /dev/null; then
@@ -129,23 +141,7 @@ if (command -v zprof > /dev/null) ;then
 fi
 #}}}
 
-if zplug check b4b4r07/enhancd; then
-    export ENHANCD_DIR=$ZSH_DIR/.enhancd
-    export ENHANCD_LOG=$ENHANCD_DIR/enhancd.log
-
-    _enhancd-cd(){
-        cd
-        local f
-        for f in $precmd_functions; do
-            $f
-        done
-        zle reset-prompt
-    }
-    zle -N _enhancd-cd
-    bindkey '^x^j' _enhancd-cd
-fi
-
-
+# {{{ save tmux config
 if [[ ! -f "$ZSH_DIR/.tmux_loader" ]]; then
     cat <<EOF > $ZSH_DIR/.tmux_loader
 PATH=$PATH
@@ -155,5 +151,6 @@ fi
 EOF
     source $ZSH_DIR/.tmux_loader
 fi
+# }}}
 
 # vim:set ft=zsh foldmethod=marker foldmarker={{{,}}} :

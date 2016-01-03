@@ -13,7 +13,7 @@ zstyle ':vcs_info:*' unstagedstr "%F{yellow}●%f"
 zstyle ':vcs_info:*' stagedstr "%F{green}●%f"
 
 sandbox_info(){
-    [[ -n "$VIRTUAL_ENV" ]] && echo "(${VIRTUAL_ENV#$PWD/})"
+    [[ -n "$VIRTUAL_ENV" ]] && echo "(`basename $VIRTUAL_ENV`)"
 }
 
 local cwd='%F{yellow}%~%f'
