@@ -154,4 +154,8 @@ fi
 # }}}
 
 [[ -f ~/.zsh.d/zshrc.local ]] && source ~/.zsh.d/zshrc.local
+
+# added by travis gem
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+
 # vim:set ft=zsh foldmethod=marker foldmarker={{{,}}} :
