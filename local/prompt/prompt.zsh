@@ -9,8 +9,8 @@ add-zsh-hook precmd vcs_info
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' formats " (%F{cyan}%b%f%u%c)"
 zstyle ':vcs_info:*' actionformats " (%F{cyan}%b%f%u%c|%F{red}%a%f)"
-zstyle ':vcs_info:*' unstagedstr "%F{yellow}●%f"
-zstyle ':vcs_info:*' stagedstr "%F{green}●%f"
+zstyle ':vcs_info:*' unstagedstr "%F{yellow}● %f"
+zstyle ':vcs_info:*' stagedstr "%F{green}● %f"
 
 sandbox_info(){
     [[ -n "$VIRTUAL_ENV" ]] && echo "(`basename $VIRTUAL_ENV`)"
