@@ -153,4 +153,5 @@ EOF
 fi
 # }}}
 
+[[ -f ~/.zsh.d/zshrc.local ]] && source ~/.zsh.d/zshrc.local
 # vim:set ft=zsh foldmethod=marker foldmarker={{{,}}} :
