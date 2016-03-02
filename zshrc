@@ -93,7 +93,9 @@ alias runhaskell="stack runghc --"; compdef ghci=ghc
 # }}}
 
 #{{{ vim alias, EDITOR
-if command -v Vim > /dev/null; then
+if command -v nvim > /dev/null; then
+    alias vim=nvim
+elif command -v Vim > /dev/null; then
     alias vim=Vim
 fi
 
