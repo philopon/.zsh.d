@@ -81,6 +81,8 @@ setopt PROMPT_SUBST
 setopt complete_aliases
 
 unsetopt automenu
+
+disable r
 #}}}
 
 # {{{ haskell alias
