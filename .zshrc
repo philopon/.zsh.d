@@ -12,3 +12,5 @@ if ! zplug check --verbose; then
 fi
 
 zplug load --verbose 2> /dev/null
+
+export PATH=$ZPLUG_HOME/bin:$PATH

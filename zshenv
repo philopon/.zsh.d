@@ -1,3 +1,5 @@
+typeset -U path PATH
+
 ZDOTDIR=~/.zsh.d
 ZCACHEDIR=~/.cache/zsh
 ZPLUG_HOME=$ZCACHEDIR/zplug
