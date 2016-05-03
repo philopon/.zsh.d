@@ -6,4 +6,6 @@ ZPLUG_HOME=$ZCACHEDIR/zplug
 EDITOR=vi
 PAGER=less
 
+PATH=~/.local/bin:/usr/local/bin:$PATH
+
 [[ ! -d $ZCACHEDIR ]] && mkdir -p $ZCACHEDIR
