@@ -15,4 +15,6 @@ zplug load --verbose 2> /dev/null
 
 export PATH=$ZPLUG_HOME/bin:$PATH
 
-[[ -z "$TMUX" && -n "$SSH_CONNECTION" ]] && exec attach-tmux
+if zplug check $ZDOTDIR/local/attach-tmux; then
+    [[ -z "$TMUX" && -n "$SSH_CONNECTION" ]] && exec attach-tmux
+fi
