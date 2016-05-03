@@ -4,4 +4,4 @@ ZPLUG_HOME=$ZCACHEDIR/zplug
 EDITOR=vi
 PAGER=less
 
-mkdir -p $ZCACHEDIR
+[[ ! -d $ZCACHEDIR ]] && mkdir -p $ZCACHEDIR
