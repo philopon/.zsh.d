@@ -9,9 +9,11 @@ zplug seebi/dircolors-solarized, hook-load:"register-lscolors $ZPLUG_HOME/repos/
 zplug junegunn/fzf-bin, as:command, from:gh-r, rename-to:fzf
 zplug mollifier/anyframe, hook-load:"source $ZDOTDIR/hook/anyframe.zsh"
 
+zplug $ZDOTDIR/local/listup-pathenv, from:local, nice:-10
+
 zplug $ZDOTDIR/local/config, from:local
-zplug $ZDOTDIR/local/aliases, from:local
-zplug $ZDOTDIR/local/auto-tmux, from:local, if:"which tmux > /dev/null", nice:-10
+zplug $ZDOTDIR/local/aliases, from:local, nice:5
+zplug $ZDOTDIR/local/auto-tmux, from:local, if:"which tmux > /dev/null", nice:-5
 
 zplug $ZDOTDIR/local/direnv, from:local, if:"which direnv > /dev/null"
 
