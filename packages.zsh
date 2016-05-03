@@ -19,6 +19,6 @@ zplug $ZDOTDIR/local/config, from:local
 zplug $ZDOTDIR/local/aliases, from:local, nice:5
 zplug $ZDOTDIR/local/auto-tmux, from:local, if:"which tmux > /dev/null", nice:-5
 
-zplug $ZDOTDIR/local/direnv, from:local, if:"which direnv > /dev/null"
+zplug direnv/direnv, as:command, from:gh-r, hook-build:"chmod 755 *", use:"*", rename-to:direnv, hook-load:'eval "$(direnv hook zsh)"'
 
 zplug $ZDOTDIR/local/pip-wrapper, from:local
