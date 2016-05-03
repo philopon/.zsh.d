@@ -1,4 +1,8 @@
-zplug zsh-users/zsh-syntax-highlighting, nice:10, if:"__zplug::core::core::version_requirement $ZSH_VERSION 4.3.17"
+version_requirement() {
+    __zplug::core::core::version_requirement "$@"
+}
+
+zplug zsh-users/zsh-syntax-highlighting, nice:10, if:"version_requirement $ZSH_VERSION 4.3.17"
 zplug zsh-users/zsh-completions
 
 zplug $ZDOTDIR/local/prompt, from:local
