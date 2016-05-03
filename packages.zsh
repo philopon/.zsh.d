@@ -21,7 +21,8 @@ zplug $ZDOTDIR/local/listup-pathenv, from:local, nice:-10
 
 zplug $ZDOTDIR/local/config, from:local
 zplug $ZDOTDIR/local/aliases, from:local, nice:5
-zplug $ZDOTDIR/local/auto-tmux, from:local, if:"which tmux > /dev/null", nice:-5
+
+zplug $ZDOTDIR/local/attach-tmux, from:local
 
 zplug direnv/direnv, as:command, from:gh-r, hook-build:"chmod 755 *", use:"*$(get_os)*", rename-to:direnv, hook-load:'eval "$(direnv hook zsh)"'
 
