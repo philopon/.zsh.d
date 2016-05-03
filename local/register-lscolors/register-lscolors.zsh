@@ -94,6 +94,8 @@ register-lscolors(){
     command -v gdircolors > /dev/null && DIRCOLORS_CMD=gdircolors
     command -v dircolors > /dev/null && DIRCOLORS_CMD=dircolors
 
+    [[ -z "$DIRCOLORS_CMD" ]] && return 1
+
     eval $($DIRCOLORS_CMD $THEME)
     zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
     export LSCOLORS=$(convert-lscolors $LS_COLORS)

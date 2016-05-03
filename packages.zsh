@@ -11,8 +11,8 @@ zplug mollifier/anyframe, hook-load:"source $ZDOTDIR/hook/anyframe.zsh"
 
 zplug $ZDOTDIR/local/config, from:local
 zplug $ZDOTDIR/local/aliases, from:local
-zplug $ZDOTDIR/local/auto-tmux, from:local, if:"which tmux", nice:-10
+zplug $ZDOTDIR/local/auto-tmux, from:local, if:"which tmux > /dev/null", nice:-10
 
-zplug $ZDOTDIR/local/direnv, from:local, if:"which direnv"
+zplug $ZDOTDIR/local/direnv, from:local, if:"which direnv > /dev/null"
 
 zplug $ZDOTDIR/local/pip-wrapper, from:local
