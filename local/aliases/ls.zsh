@@ -1,4 +1,4 @@
-if which gls > /dev/null; then
+if which gls &> /dev/null; then
     alias ls="gls --color"
 elif [[ $OSTYPE == *linux* ]]; then
     alias ls="ls --color"
