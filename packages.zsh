@@ -6,6 +6,8 @@ get_os() {
     __zplug::core::core::get_os
 }
 
+zplug zplug/zplug
+
 zplug zsh-users/zsh-syntax-highlighting, nice:10, if:"version_requirement $ZSH_VERSION 4.3.17"
 zplug zsh-users/zsh-completions
 
