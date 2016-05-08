@@ -6,10 +6,6 @@ zsh_version() {
     __zplug::core::core::version_requirement $ZSH_VERSION $1
 }
 
-on_k() {
-    [[ `hostname` =~ '^fe01p[0-9]{2}$' ]]
-}
-
 zplug zplug/zplug
 
 zplug zsh-users/zsh-syntax-highlighting, nice:10, if:"zsh_version $1"
@@ -32,7 +28,7 @@ if which tmux &> /dev/null; then
     zplug $ZDOTDIR/local/attach-tmux, from:local, hook-load:"source $ZDOTDIR/hook/tmux.zsh"
 fi
 
-zplug $ZDOTDIR/local/k, from:local, if:on_k
+zplug $ZDOTDIR/local/k, from:local, if:'[[ `hostname` =~ "^fe01p[0-9]{2}$" ]]'
 
 zplug direnv/direnv, as:command, from:gh-r, hook-build:"chmod 755 *", use:"*$(get_os)*", rename-to:direnv, hook-load:'eval "$(direnv hook zsh)"'
 
