@@ -1,6 +1,6 @@
 () {
     local ZPLUG_INIT=$ZPLUG_HOME/init.zsh
-    [[ ! -f $ZPLUG_INIT ]] && git clone https://github.com/b4b4r07/zplug $ZPLUG_HOME
+    [[ ! -f $ZPLUG_INIT ]] && git clone https://github.com/zplug/zplug $ZPLUG_HOME
     source $ZPLUG_INIT
 
     source $ZDOTDIR/packages.zsh
