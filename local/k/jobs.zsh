@@ -58,3 +58,9 @@ jg(){
         $PAGER ~/.cache/pjget_output
     fi
 }
+
+JOBTEST_PY=$0:h/scripts/jobtest.py
+
+jt(){
+    python2.7 $JOBTEST_PY "$@"
+}
