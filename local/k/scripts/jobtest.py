@@ -1,3 +1,5 @@
+#!/usr/bin/env python2.7
+
 import re
 import sys
 import tempfile
@@ -76,6 +78,7 @@ class Job(object):
                 self._stgin(src, dst)
 
     def chdir(self):
+        self.orig_dir = os.getcwd()
         os.chdir(self.stgdir)
 
     def submit(self, node=1, elapse=3600, wait_time=3600):
@@ -111,14 +114,15 @@ class Job(object):
     def watch_stgouts(self):
         return [self.watch(src) for srcs, _ in self.stgouts for src in srcs]
 
-    def stgout_report(self):
-        print('{0} stage out {0}'.format('-' * 30))
-        for (srcs, dst) in self.stgouts:
+    def stgout(self):
+        print('{0} STGOUT {0}'.format('-' * 30))
+        for srcs, dst in self.stgouts:
             for src in srcs:
                 if os.path.isfile(src):
-                    print('{}: {}byte'.format(src, os.path.getsize(src)))
+                    print('stgout: {} to {}'.format(src, dst))
+                    shutil.copy(src, os.path.join(self.orig_dir, dst))
                 else:
-                    print('{}: not exists'.format(src))
+                    sys.stderr.write('{}: not exists\n'.format(src))
 
 
 def file_watch(src, dst):
@@ -159,7 +163,7 @@ def main():
         def handler(signal, frame):
             job.pjsub.terminate()
             job.pjsub.wait()
-            job.stgout_report()
+            job.stgout()
             sys.exit(1)
 
         signal.signal(signal.SIGINT, handler)
@@ -175,6 +179,7 @@ def main():
                 job.watch(w)
 
         job.pjsub.wait()
+        job.stgout()
 
 if __name__ == '__main__':
     main()
