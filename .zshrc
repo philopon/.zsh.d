@@ -27,6 +27,7 @@
 
     if zplug check $ZDOTDIR/local/attach-tmux; then
         [[ -z "$TMUX" && -n "$SSH_CONNECTION" ]] && exec attach-tmux
+        bindkey -e
     fi
 
     [[ -f $ZDOTDIR/.zshrc.local ]] && source $ZDOTDIR/.zshrc.local
