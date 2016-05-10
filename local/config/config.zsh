@@ -10,6 +10,8 @@ setopt hist_save_by_copy
 setopt share_history
 setopt auto_pushd
 
+bindkey -e
+
 autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
