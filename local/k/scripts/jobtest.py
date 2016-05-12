@@ -13,9 +13,25 @@ import argparse
 
 
 class Job(object):
+    __slots__ = 'stgins', 'stgouts', 'script', 'stgdir', 'pjsub', 'path', 'orig_dir', 'o', 'e'
+
     def __init__(self, stgins, stgouts):
         self.stgins = stgins
         self.stgouts = stgouts
+        self.pjsub = None
+
+    def _info(self):
+        for s, d in self.stgins:
+            yield 'STGIN: ' + ','.join(s) + d
+
+        for s, d in self.stgouts:
+            yield 'STGOUT:' + ','.join(s) + d
+
+        for line in self.script:
+            yield 'SCRIPT:' + line.strip()
+
+    def info(self):
+        return '\n'.join(self._info())
 
     @classmethod
     def parse(cls, file):
@@ -59,7 +75,7 @@ class Job(object):
         return self
 
     def __exit__(self, *args, **kws):
-        if self.pjsub.poll() is None:
+        if self.pjsub is not None and self.pjsub.poll() is None:
             self.pjsub.terminate()
         shutil.rmtree(self.stgdir)
 
@@ -155,10 +171,13 @@ def main():
     parser.add_argument('--elapse', '-e', metavar='SEC', type=int, help='elapse time (default: %(default)s)', default=3600)
     parser.add_argument('--wait', metavar='SEC', type=int, help='wait time (default: %(default)s)', default=3600)
     parser.add_argument('--watch', '-w', metavar='FILE', type=str, help='watch file (default: stgouts)', nargs='*', default=None)
+    parser.add_argument('--info', '-i', type=bool, help='print jobtest information', default=False)
 
     args = parser.parse_args()
 
     with Job.parse(args.script) as job:
+        if args.info:
+            print(job.info())
 
         def handler(signal, frame):
             job.pjsub.terminate()
