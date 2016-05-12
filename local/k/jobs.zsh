@@ -43,11 +43,15 @@ alias jla="pjstat -A --filter grp=${HOME:h:t}"
 alias js=pjsub
 
 jd(){
-    K::joblist\
-        | K::joblist::pretty_joblist\
-        | anyframe-selector-auto\
-        | cut -f1\
-        | anyframe-action-execute pjdel
+    if [[ -z "$1" ]]; then
+        K::joblist\
+            | K::joblist::pretty_joblist\
+            | anyframe-selector-auto\
+            | cut -f1\
+            | anyframe-action-execute pjdel
+    else
+        pjdel "$@"
+    fi
 }
 
 jg(){
