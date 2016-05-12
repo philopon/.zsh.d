@@ -55,7 +55,7 @@ jg(){
     )
 
     if [[ "$?" == 0 ]]; then
-        $PAGER ~/.cache/pjget_output
+        less +G ~/.cache/pjget_output
     fi
 }
 
