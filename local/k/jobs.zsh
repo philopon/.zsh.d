@@ -7,7 +7,7 @@ K::joblist::reset(){
 }
 
 K::joblist::get(){
-    pjstat --data | awk 'function unquate(s) {return substr(s, 2, length(s) - 2)} BEGIN{FS=","; OFS="\t"} NR>5{print unquate($2), unquate($3), unquate($8), unquate($9)}'
+    pjstat --data | awk 'function unquate(s) {return substr(s, 2, length(s) - 2)} BEGIN{FS=","; OFS="\t"} NR>5{print unquate($2), unquate($3), unquate($5), unquate($8), unquate($9)}'
 }
 
 K::joblist(){
@@ -22,6 +22,10 @@ K::joblist(){
         K::joblist::get > $JOBLIST_FILE
     fi
     cat $JOBLIST_FILE
+}
+
+K::joblist::pretty_joblist() {
+    ruby -F"\t" -nae 'BEGIN{$col = 0; $fs = []}; $col = [$col, $F[1].length].max; $fs.push($F); END{$fs.each {|f|printf("%8s %-"+$col.to_s+"s %s %s %s", *f)}}'
 }
 
 K::joblist::get_log(){
@@ -40,6 +44,7 @@ alias js=pjsub
 
 jd(){
     K::joblist\
+        | K::joblist::pretty_joblist\
         | anyframe-selector-auto\
         | cut -f1\
         | anyframe-action-execute pjdel
@@ -49,6 +54,8 @@ jg(){
     (
         cd ~/.cache;
         K::joblist\
+            | awk '$3 == "RUN" {print $0}'\
+            | K::joblist::pretty_joblist\
             | anyframe-selector-auto\
             | cut -f1\
             | anyframe-action-execute K::joblist::get_log "${1:-stdout}"
