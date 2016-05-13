@@ -47,7 +47,7 @@ jd(){
         K::joblist\
             | K::joblist::pretty_joblist\
             | anyframe-selector-auto\
-            | cut -f1\
+            | awk '{print $1}'\
             | anyframe-action-execute pjdel
     else
         pjdel "$@"
@@ -61,7 +61,7 @@ jg(){
             | awk '$3 == "RUN" {print $0}'\
             | K::joblist::pretty_joblist\
             | anyframe-selector-auto\
-            | cut -f1\
+            | awk '{print $1}'\
             | anyframe-action-execute K::joblist::get_log "${1:-stdout}"
     )
 
