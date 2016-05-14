@@ -24,7 +24,7 @@ zplug $ZDOTDIR/local/listup-pathenv, from:local, nice:-10
 zplug $ZDOTDIR/local/config, from:local
 zplug $ZDOTDIR/local/aliases, from:local, nice:5
 
-zplug philopon/k.zsh, if:'[[ `hostname` =~ "^fe01p[0-9]{2}$" ]]'
+zplug philopon/k.zsh, if:'[[ `hostname` =~ "^fe01p[0-9]{2}$" ]]', hook-build:make
 
 zplug direnv/direnv, as:command, from:gh-r, hook-build:"chmod 755 *", use:"*$(get_os)*", rename-to:direnv, hook-load:'eval "$(direnv hook zsh)"'
 
