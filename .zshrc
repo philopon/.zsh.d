@@ -1,4 +1,6 @@
 () {
+    source $ZDOTDIR/scripts/attach-tmux.zsh
+
     local ZPLUG_INIT=$ZPLUG_HOME/init.zsh
     [[ ! -f $ZPLUG_INIT ]] && git clone https://github.com/zplug/zplug $ZPLUG_HOME
     source $ZPLUG_INIT
@@ -23,10 +25,6 @@
     if (( $DATE > `cat $LAST_UPDATED` + 24 * 3600 )); then
         zplug update
         echo "$DATE" > $LAST_UPDATED
-    fi
-
-    if zplug check $ZDOTDIR/local/attach-tmux; then
-        [[ -z "$TMUX" && -n "$SSH_CONNECTION" ]] && exec attach-tmux
     fi
 
     [[ -f $ZDOTDIR/.zshrc.local ]] && source $ZDOTDIR/.zshrc.local

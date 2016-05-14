@@ -24,10 +24,6 @@ zplug $ZDOTDIR/local/listup-pathenv, from:local, nice:-10
 zplug $ZDOTDIR/local/config, from:local
 zplug $ZDOTDIR/local/aliases, from:local, nice:5
 
-if which tmux &> /dev/null; then
-    zplug $ZDOTDIR/local/attach-tmux, from:local, hook-load:"source $ZDOTDIR/hook/tmux.zsh"
-fi
-
 zplug $ZDOTDIR/local/k, from:local, if:'[[ `hostname` =~ "^fe01p[0-9]{2}$" ]]'
 
 zplug direnv/direnv, as:command, from:gh-r, hook-build:"chmod 755 *", use:"*$(get_os)*", rename-to:direnv, hook-load:'eval "$(direnv hook zsh)"'
