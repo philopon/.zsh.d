@@ -23,6 +23,14 @@
 
     local DATE=`date +%s`
     if (( $DATE > `cat $LAST_UPDATED` + 24 * 3600 )); then
+        (
+            cd $ZDOTDIR
+            if git diff --exit-code > /dev/null; then
+                git fetch
+            else
+                git pull
+            fi
+        )
         zplug update
         echo "$DATE" > $LAST_UPDATED
     fi
