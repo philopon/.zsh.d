@@ -25,10 +25,10 @@
     if (( $DATE > `cat $LAST_UPDATED` + 24 * 3600 )); then
         (
             cd $ZDOTDIR
-            if git diff --exit-code > /dev/null; then
-                git fetch
-            else
-                git pull
+            git fetch
+            local BRANCH=`git rev-parse --abbrev-ref HEAD`
+            if git format-patch $BRANCH..origin/$BRANCH --stdout | git apply --check; then
+                git merge origin/$BRANCH $BRANCH
             fi
         )
         zplug update
