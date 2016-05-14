@@ -1,4 +1,4 @@
-if which tmux &> /dev/null && [[ -z "$TMUX" && -n "$SSH_CONNECTION" ]] ; then
+if hash tmux &> /dev/null && [[ -z "$TMUX" && -n "$SSH_CONNECTION" ]] ; then
     attach-tmux () {
         local result=`tmux list-session 2> /dev/null`
         if [[ -z "$result" ]]; then

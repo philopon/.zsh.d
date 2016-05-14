@@ -1,4 +1,4 @@
-which fzf > /dev/null && zstyle ":anyframe:selector:" use fzf
+zstyle ":anyframe:selector:" use fzf
 
 bindkey '^r' anyframe-widget-put-history
 bindkey '^x^k' anyframe-widget-kill

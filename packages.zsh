@@ -17,7 +17,7 @@ zplug $ZDOTDIR/local/register-lscolors, from:local
 zplug seebi/dircolors-solarized, hook-load:"register-lscolors $ZPLUG_HOME/repos/seebi/dircolors-solarized/dircolors.ansi-dark", nice:5
 
 zplug junegunn/fzf-bin, as:command, from:gh-r, rename-to:fzf
-zplug mollifier/anyframe, hook-load:"source $ZDOTDIR/hook/anyframe.zsh"
+zplug mollifier/anyframe, hook-load:"source $ZDOTDIR/scripts/hook-anyframe.zsh"
 
 zplug $ZDOTDIR/local/listup-pathenv, from:local, nice:-10
 
