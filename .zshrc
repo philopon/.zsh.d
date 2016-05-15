@@ -7,9 +7,7 @@
 
     source $ZDOTDIR/packages.zsh
 
-    if ! zplug check --verbose; then
-        zplug install
-    fi
+    zplug check --verbose || zplug install
 
     zplug load --verbose 2> /dev/null
 
@@ -20,6 +18,7 @@
 
     local DATE=`date +%s`
     if (( $DATE > `cat $LAST_UPDATED` + 24 * 3600 )); then
+        echo "Daily auto-update"
         (
             cd $ZDOTDIR
             git fetch
@@ -28,6 +27,7 @@
                 git merge origin/$BRANCH $BRANCH
             fi
         )
+        zplug check --verbose || zplug install
         zplug update
         zplug clean --force
         echo "$DATE" > $LAST_UPDATED
