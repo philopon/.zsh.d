@@ -14,7 +14,7 @@ zplug zsh-users/zsh-completions
 zplug $ZDOTDIR/local/prompt, from:local
 
 zplug $ZDOTDIR/local/register-lscolors, from:local
-zplug seebi/dircolors-solarized, hook-load:"register-lscolors $ZPLUG_HOME/repos/seebi/dircolors-solarized/dircolors.ansi-dark", nice:5
+zplug trapd00r/LS_COLORS, hook-load:"register-lscolors $ZPLUG_HOME/repos/trapd00r/LS_COLORS/LS_COLORS", nice:5
 
 zplug junegunn/fzf-bin, as:command, from:gh-r, rename-to:fzf
 zplug mollifier/anyframe, hook-load:"source $ZDOTDIR/scripts/hook-anyframe.zsh"
