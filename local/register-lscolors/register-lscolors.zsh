@@ -3,8 +3,8 @@
 register-lscolors(){
     local DIRCOLORS_CMD
 
-    hash gdircolors > /dev/null && DIRCOLORS_CMD=gdircolors
-    hash dircolors > /dev/null && DIRCOLORS_CMD=dircolors
+    hash gdircolors 2> /dev/null && DIRCOLORS_CMD=gdircolors
+    hash dircolors 2> /dev/null && DIRCOLORS_CMD=dircolors
 
     [[ -z "$DIRCOLORS_CMD" ]] && return 1
 

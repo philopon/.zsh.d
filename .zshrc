@@ -19,7 +19,6 @@
 
     local DATE=`date +%s`
     if (( $DATE > `cat $LAST_UPDATED` + 24 * 3600 )); then
-        echo "Daily auto-update"
         (
             cd $ZDOTDIR
             git fetch
@@ -31,6 +30,7 @@
         zplug check --verbose || zplug install
         zplug update
         zplug clean --force
+        zplug clear
         echo "$DATE" > $LAST_UPDATED
     fi
 
