@@ -29,6 +29,7 @@
             fi
         )
         zplug update
+        zplug clean --force
         echo "$DATE" > $LAST_UPDATED
     fi
 
