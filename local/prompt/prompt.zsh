@@ -7,26 +7,26 @@ autoload -Uz vcs_info
 add-zsh-hook precmd vcs_info
 
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' formats " (%F{cyan}%b%f%u%c)"
-zstyle ':vcs_info:*' actionformats " (%F{cyan}%b%f%u%c|%F{red}%a%f)"
-zstyle ':vcs_info:*' unstagedstr "%F{yellow}● %f"
-zstyle ':vcs_info:*' stagedstr "%F{green}● %f"
+zstyle ':vcs_info:*' formats " (%b%u%c)"
+zstyle ':vcs_info:*' actionformats " (%b%u%c|%F{red}%a%f)"
+zstyle ':vcs_info:*' unstagedstr "%F{226}● %f"
+zstyle ':vcs_info:*' stagedstr "%F{82}● %f"
 
 sandbox_info(){
     [[ -n "$VIRTUAL_ENV" ]] && echo "(`basename $VIRTUAL_ENV`)"
 }
 
-local cwd='%F{yellow}%~%f'
+local cwd='%F{172}%~%f'
 
-local user="%(#,%F{red},%F{magenta})%n%f"
+local user="%(#,%F{red},%F{240})%n%f"
 
 cmachine() {
     local color
-    [[ -n "$SSH_CONNECTION" ]] && color=red || color=green
+    [[ -n "$SSH_CONNECTION" ]] && color=red || color=240
     echo "%F{$color}%m%f"
 }
 
 local cmark="%B%(?,%F{green},%F{red})%#%f%b"
 
-PROMPT="$user@\$(cmachine) in $cwd\${vcs_info_msg_0_} \$(sandbox_info)
+PROMPT="$user%F{240}@%f\$(cmachine)%F{240}:%f $cwd\${vcs_info_msg_0_} \$(sandbox_info)
 $cmark "
