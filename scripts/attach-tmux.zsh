@@ -1,4 +1,5 @@
-if hash tmux &> /dev/null && [[ -z "$TMUX" && -n "$SSH_CONNECTION" ]] ; then
+if hash tmux &> /dev/null; then
+
     attach-tmux () {
         local result=`tmux list-session 2> /dev/null`
         if [[ -z "$result" ]]; then
@@ -27,12 +28,14 @@ if hash tmux &> /dev/null && [[ -z "$TMUX" && -n "$SSH_CONNECTION" ]] ; then
         tmux attach-session -t $result
     }
 
-    [[ ! -f ~/.tmux.conf ]] && ln -sf $ZDOTDIR/tmux.conf ~/.tmux.conf
-    [[ ! -d ~/.tmux/plugins/tpm ]] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    [[ -z "$SSH_CONNECTION" ]] && break
 
-    if ((`grep @plugin $ZDOTDIR/tmux.conf | wc -l` - `ls ~/.tmux/plugins|wc -l` > 0)); then
+    if [[ -z "$TMUX" ]]; then
+        [[ ! -f ~/.tmux.conf ]] && ln -sf $ZDOTDIR/tmux.conf ~/.tmux.conf
+        [[ ! -d ~/.tmux/plugins/tpm ]] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+        exec attach-tmux
+
+    elif ((`grep @plugin $ZDOTDIR/tmux.conf | wc -l` - `ls ~/.tmux/plugins|wc -l` > 0)); then
         tmux run-shell ~/.tmux/plugins/tpm/bindings/install_plugins
     fi
-
-    exec attach-tmux
 fi
