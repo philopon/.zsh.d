@@ -18,12 +18,14 @@ sandbox_info(){
 
 local cwd='%F{172}%~%f'
 
-local user="%(#,%F{red},%F{240})%n%f"
+local user="%(#,%F{196}%B%n%b%f,%F{240}%n%f)"
 
 cmachine() {
-    local color
-    [[ -n "$SSH_CONNECTION" ]] && color=red || color=240
-    echo "%F{$color}%m%f"
+    if [[ -n "$SSH_CONNECTION" ]]; then
+        echo "%F{196}%B%m%b%f"
+    else
+        echo "%F{240}%m%f"
+    fi
 }
 
 local cmark="%B%(?,%F{green},%F{red})%#%f%b"
