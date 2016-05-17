@@ -29,12 +29,10 @@
             tmux attach-session -t $result
         }
 
-        [[ -z "$SSH_CONNECTION" ]] && return
-
         if [[ -z "$TMUX" ]]; then
             [[ ! -f ~/.tmux.conf ]] && ln -sf $ZDOTDIR/tmux.conf ~/.tmux.conf
             [[ ! -d ~/.tmux/plugins/tpm ]] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-            exec attach-tmux
+            [[ -n "$SSH_CONNECTION" ]] && exec attach-tmux
 
         elif ((`grep @plugin $ZDOTDIR/tmux.conf | wc -l` - `ls ~/.tmux/plugins|wc -l` > 0)); then
             tmux run-shell ~/.tmux/plugins/tpm/bindings/install_plugins
