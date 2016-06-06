@@ -23,7 +23,7 @@
             cd $ZDOTDIR
             git fetch
             local BRANCH=`git rev-parse --abbrev-ref HEAD`
-            if git format-patch $BRANCH..origin/$BRANCH --stdout | git apply --check; then
+            if git format-patch $BRANCH..origin/$BRANCH --stdout | git apply --check 2> /dev/null; then
                 git merge origin/$BRANCH $BRANCH
             fi
         )
@@ -32,6 +32,7 @@
         zplug clean --force
         zplug clear
         echo "$DATE" > $LAST_UPDATED
+        exec zsh
     fi
 
     [[ -f $ZDOTDIR/.zshrc.local ]] && source $ZDOTDIR/.zshrc.local
