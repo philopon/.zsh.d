@@ -8,7 +8,7 @@ zsh_version() {
 
 zplug zplug/zplug
 
-zplug zsh-users/zsh-syntax-highlighting, nice:10, if:"zsh_version $1"
+zplug zsh-users/zsh-syntax-highlighting, nice:10, if:"zsh_version 4.3.17"
 zplug zsh-users/zsh-completions
 
 zplug $ZDOTDIR/local/prompt, from:local
