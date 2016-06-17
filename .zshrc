@@ -18,7 +18,7 @@
     [[ ! -f $LAST_UPDATED ]] && echo 0 > $LAST_UPDATED
 
     local DATE=`date +%s`
-    if (( $DATE > `cat $LAST_UPDATED` + 24 * 3600 )); then
+    if (( $DATE > `cat $LAST_UPDATED` + 7 * 24 * 3600 )); then
         (
             cd $ZDOTDIR
             git fetch
@@ -36,4 +36,9 @@
     fi
 
     [[ -f $ZDOTDIR/.zshrc.local ]] && source $ZDOTDIR/.zshrc.local
+}
+
+update-zshrc() {
+    rm $ZCACHEDIR/last_updated
+    exec zsh
 }
