@@ -19,6 +19,15 @@ pip_wrapper(){
     command $pip "${args[@]}"
 }
 
-alias pip="pip_wrapper pip"
+pip(){
+    if [[ -z "$VIRTUAL_ENV" ]] && hash pip3 &> /dev/null; then
+        pip_wrapper pip3 "$@"
+        return $?
+    fi
+
+    pip_wrapper pip "$@"
+    return $?
+}
+
 alias pip2="pip_wrapper pip2"
 alias pip3="pip_wrapper pip3"
