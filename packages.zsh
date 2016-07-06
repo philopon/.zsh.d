@@ -27,6 +27,7 @@ zplug $ZDOTDIR/local/config, from:local
 zplug $ZDOTDIR/local/aliases, from:local, nice:5
 
 if [[ `hostname` =~ "^fe01p[0-9]{2}$" ]]; then
+    export PATH=$PATH:/opt/ksched/bin
     zplug philopon/k.zsh, hook-build:make
 fi
 
