@@ -7,6 +7,8 @@ ZPLUG_HOME=$ZCACHEDIR/zplug
 export EDITOR=`which vim`
 export PAGER=`which less`
 
-PATH=~/.local/bin:/usr/local/bin:$PATH
+export GOPATH=$HOME/.go
+
+PATH=$GOPATH/bin:~/.local/bin:/usr/local/bin:$PATH
 
 [[ ! -d $ZCACHEDIR ]] && mkdir -p $ZCACHEDIR
