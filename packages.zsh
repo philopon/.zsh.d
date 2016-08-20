@@ -31,5 +31,3 @@ if [[ `hostname` =~ "^fe01p[0-9]{2}$" ]]; then
 fi
 
 zplug direnv/direnv, as:command, from:gh-r, hook-build:"chmod 755 *", use:"*$(get_os)*", rename-to:direnv, hook-load:'eval "$(direnv hook zsh)"'
-
-zplug $ZDOTDIR/local/pip-wrapper, from:local
