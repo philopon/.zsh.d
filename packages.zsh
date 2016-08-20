@@ -1,9 +1,9 @@
 get_os() {
-    __zplug::core::core::get_os
+    __zplug::base::base::get_os
 }
 
 zsh_version() {
-    __zplug::core::core::version_requirement $ZSH_VERSION $1
+    __zplug::base::base::version_requirement $ZSH_VERSION $1
 }
 
 zplug zplug/zplug
