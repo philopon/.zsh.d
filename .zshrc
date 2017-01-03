@@ -1,6 +1,8 @@
 local ZPLUG_INIT=$ZPLUG_HOME/init.zsh
 local LAST_UPDATED=$ZCACHEDIR/last_updated
 
+bindkey -e
+
 source $ZDOTDIR/scripts/attach-tmux.zsh
 
 [[ ! -f $ZPLUG_INIT ]] && git clone https://github.com/zplug/zplug $ZPLUG_HOME
@@ -28,7 +30,7 @@ if (( $DATE > `cat $LAST_UPDATED` + 7 * 24 * 3600 )); then
     echo "$DATE" > $LAST_UPDATED
 fi
 
-zplug load --verbose 2> /dev/null
+zplug load
 
 [[ -f $ZDOTDIR/.zshrc.local ]] && source $ZDOTDIR/.zshrc.local
 
