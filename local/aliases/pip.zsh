@@ -1,33 +1,32 @@
-pip_wrapper(){
-    local pip="$1"
+ask-pip() {
+    local install
+    for a in "$@"; do
+        if [[ "$a" == "--user" ]]; then
+            "$@"
+            return $?
+        fi
 
-    local -a args
-    args=("${@[2,-1]}")
-
-    local is_install=""
-    for arg in $args; do
-        if [[ "$arg" == install ]]; then
-            is_install="1"
-            break
+        if [[ "$a" == "install" ]]; then
+            install=true
         fi
     done
-
-    if [[ -n "$is_install" && -z "$VIRTUAL_ENV" ]]; then
-        args=("${args[@]}" --user)
-    fi
-
-    command $pip "${args[@]}"
-}
-
-pip(){
-    if [[ -z "$VIRTUAL_ENV" ]] && hash pip3 &> /dev/null; then
-        pip_wrapper pip3 "$@"
+    if [[ "$install" != true ]]; then
+        "$@"
         return $?
     fi
 
-    pip_wrapper pip "$@"
-    return $?
+    read -q "REPLY?there is no --user option. continue? (y/N)"
+    echo
+
+    if [[ "$REPLY" == "y" ]]; then
+        "$@"
+        return $?
+    fi
+
+    echo "abort"
+    return 1
 }
 
-alias pip2="pip_wrapper pip2"
-alias pip3="pip_wrapper pip3"
+alias pip=pip3
+alias pip2="ask-pip pip2"
+alias pip3="ask-pip pip3"
