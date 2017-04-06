@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+
+import re
+
+
+def parse_gistid(f):
+    r = re.compile(r'gist_id\s*:\s*(\S+)')
+    for line in f:
+        m = r.search(line)
+        if m is None:
+            continue
+
+        return m.group(1)
+
+
+def main():
+    import argparse
+    import subprocess
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('FILE', nargs='+', type=argparse.FileType())
+
+    args = parser.parse_args()
+
+    names = set()
+
+    for f in args.FILE:
+        with f:
+            if f.name in names:
+                continue
+
+            names.add(f.name)
+
+            gist_id = parse_gistid(f)
+
+        subprocess.call(['gist', '-u', gist_id, f.name])
+
+
+if __name__ == '__main__':
+    main()

@@ -23,6 +23,8 @@ zplug $ZDOTDIR/local/listup-pathenv, from:local
 
 zplug $ZDOTDIR/local/config, from:local
 zplug $ZDOTDIR/local/aliases, from:local
+zplug $ZDOTDIR/local/gist, from:local, as:command
+zplug $ZDOTDIR/local/rust, from:local
 
 if [[ `hostname` =~ "^fe01p[0-9]{2}$" ]]; then
     zplug philopon/k.zsh, hook-build:make
