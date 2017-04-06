@@ -15,6 +15,11 @@ ask-pip() {
         return $?
     fi
 
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        "$@"
+        return $?
+    fi
+
     read -q "REPLY?there is no --user option. continue? (y/N)"
     echo
 
