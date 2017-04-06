@@ -38,3 +38,5 @@ update-zshrc() {
     rm $ZCACHEDIR/last_updated
     exec zsh
 }
+
+hash direnv 2> /dev/null && eval "$(direnv hook zsh)"
