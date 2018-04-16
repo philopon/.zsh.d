@@ -25,6 +25,11 @@ if (( $DATE > `cat $LAST_UPDATED` + 7 * 24 * 3600 )); then
         fi
     )
 
+    (
+        cd $ZPLUG_HOME
+        git pull
+    )
+
     zplug check --verbose || zplug install
     zplug update
     echo "$DATE" > $LAST_UPDATED
