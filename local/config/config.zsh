@@ -16,6 +16,11 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey '^p' history-beginning-search-backward-end
 bindkey '^n' history-beginning-search-forward-end
 
+autoload -Uz zmv
+alias zmv='noglob \zmv -W'
+alias zcp='noglob \zmv -WC'
+alias zln='noglob \zmv -WLs'
+
 setopt complete_aliases
 
 unsetopt automenu

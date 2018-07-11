@@ -21,8 +21,9 @@ zplug mollifier/anyframe, hook-load:"source $ZDOTDIR/scripts/hook-anyframe.zsh"
 
 zplug $ZDOTDIR/local/listup-pathenv, from:local
 
+zplug $ZDOTDIR/local/python, from:local
 zplug $ZDOTDIR/local/config, from:local
-zplug $ZDOTDIR/local/aliases, from:local
+zplug $ZDOTDIR/local/command, from:local
 zplug $ZDOTDIR/local/gist, from:local, as:command
 zplug $ZDOTDIR/local/rust, from:local
 

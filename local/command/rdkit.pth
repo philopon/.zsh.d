@@ -1,0 +1,22 @@
+set-rdkit.pth () {
+    local PY=/usr/local/opt/python3/bin/python3
+
+    RDK=$($PY -c "import os, rdkit; print(os.path.dirname(os.path.dirname(rdkit.__file__)))")
+    VER=$($PY -c 'import sys; i = sys.version_info; print("{}.{}".format(i.major, i.minor))')
+
+    VENV=$(pipenv --venv)
+    VENV_EXIT=$?
+
+    if [[ $VENV_EXIT != 0 ]]; then
+        return $VENV_EXIT
+    fi
+
+    PTH=$(pipenv --venv)/lib/python$VER/site-packages/rdkit.pth
+
+    if [[ -f $PTH ]]; then
+        echo "$PTH already exists"
+        return 1
+    fi
+
+    echo $RDK > $PTH
+}
